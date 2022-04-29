@@ -2,7 +2,7 @@ const dataModel = require("../Models/resumeModel/resumeModel");
 
 const getResume = async (req, res, next) => {
   try {
-    const resume = await dataModel.findOne({ _id: "626acf51e9be65dcf9b00eef" });
+    const resume = await dataModel.find();
     if (!resume) {
       throw "Resume not found!!";
     }
