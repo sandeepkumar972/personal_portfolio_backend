@@ -32,7 +32,23 @@ const saveResume = async (req, res, next) => {
   }
 };
 
+const deleteResume = async (req, res, next) => {
+  const id = req.params.id;
+  try {
+    const resume = await dataModel.findOneAndDelete({ id });
+    if (!resume) {
+      throw "Resume not found!!";
+    }
+    console.log("Resume Deleted",resume)
+    res.status(200).send(resume);
+  } catch (err) {
+    console.log("Resume Not Deleted",err.message)
+    res.status(400).send(err);
+  }
+};
+
 module.exports = {
   getResume,
   saveResume,
+  deleteResume,
 };
