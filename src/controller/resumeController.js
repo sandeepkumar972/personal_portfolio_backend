@@ -39,10 +39,31 @@ const deleteResume = async (req, res, next) => {
     if (!resume) {
       throw "Resume not found!!";
     }
-    console.log("Resume Deleted",resume)
+    console.log("Resume Deleted", resume);
     res.status(200).send(resume);
   } catch (err) {
-    console.log("Resume Not Deleted",err.message)
+    console.log("Resume Not Deleted", err.message);
+    res.status(400).send(err);
+  }
+};
+
+const updateResume = async (req, res, next) => {
+  const id = req.params.id;
+  const data = req.body;
+  console.log("data", data,id);
+  try {
+    const resume = await dataModel.findOneAndUpdate(
+      { id },
+      { data },
+      { new: true }
+    );
+    if (!resume) {
+      throw "Resume not found!!";
+    }
+    console.log("Resume Updated", resume);
+    res.status(200).send(resume);
+  } catch (err) {
+    console.log("Resume Not Updated", err.message);
     res.status(400).send(err);
   }
 };
@@ -51,4 +72,5 @@ module.exports = {
   getResume,
   saveResume,
   deleteResume,
+  updateResume,
 };
