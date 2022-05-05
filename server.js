@@ -1,4 +1,5 @@
 const express = require("express");
+const argv = require("yargs").argv;
 const { mongoConnection } = require("./mongo/config");
 const usersController = require("./src/controller/usersController");
 const profileRouter = require("./src/routers/profileRouter.js");
@@ -16,7 +17,7 @@ app.use(cors());
 
 mongoConnection();
 
-const host = 8080;
+const host = argv.port || 8080;
 app.listen(host, () => {
   console.log(`Server run on local host : ${host}`);
 });
