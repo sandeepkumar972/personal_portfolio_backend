@@ -17,7 +17,7 @@ app.use(cors());
 
 mongoConnection();
 
-const host = argv.port || 8080;
+const host = process.env.PORT || 8080;
 app.listen(host, () => {
   console.log(`Server run on local host : ${host}`);
 });
