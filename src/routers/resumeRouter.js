@@ -4,7 +4,8 @@ const resumeRouter = express.Router();
 
 resumeRouter.get("/get", resumeController.getResume);
 resumeRouter.post("/save", resumeController.saveResume);
-resumeRouter.delete("/delete/:id", resumeController.deleteResume);
+resumeRouter.put("/delete/:id", resumeController.deleteResume);
 resumeRouter.put("/update/:id", resumeController.updateResume);
+resumeRouter.get("/getBlogs", resumeController.getBlogs);
 
 module.exports = resumeRouter;

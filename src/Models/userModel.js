@@ -2,17 +2,22 @@ const mongoose = require("mongoose");
 const { StringDecoder } = require("string_decoder");
 
 const UserSchema = new mongoose.Schema({
-  name: {
-    type: String,
+  userData: {
+    type: Object,
     required: true,
   },
-  type: {
+  name: {
     type: String,
     default: 0,
   },
-  password: {
+  email: {
     type: String,
-    required : true
+    default: 0,
+  },
+  uid: {
+    type: String,
+    unique: true,
+    default: 0,
   },
 });
 
