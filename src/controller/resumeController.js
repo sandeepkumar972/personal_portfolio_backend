@@ -14,7 +14,7 @@ const getResume = async (req, res, next) => {
 
 const saveResume = async (req, res, next) => {
   try {
-    // console.log("start save data!!", req.body);
+    console.log("start save data!!", req.body);
     let resume = await dataModel.create({
       ...req.body,
     });
@@ -34,6 +34,7 @@ const saveResume = async (req, res, next) => {
 
 const deleteResume = async (req, res, next) => {
   const id = req.params.id;
+  console.log("start delete data!!", req.body);
   try {
     const resume = await dataModel.findOneAndDelete({ id });
     if (!resume) {
@@ -50,7 +51,8 @@ const deleteResume = async (req, res, next) => {
 const updateResume = async (req, res, next) => {
   const id = req.params.id;
   const data = req.body;
-  console.log("data", data,id);
+  console.log("start update data!!", data.secret);
+
   try {
     const resume = await dataModel.findOneAndUpdate(
       { id },
