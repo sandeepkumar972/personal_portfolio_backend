@@ -2,7 +2,7 @@ const express = require("express");
 const receivedController = require("../controller/receivedController");
 const receviedRouter = express.Router();
 
-receviedRouter.get("/getMessage", receivedController.getMessage);
+receviedRouter.post("/getMessage", receivedController.getMessage);
 
 receviedRouter.post("/sendMessage", receivedController.sendMessage);
 

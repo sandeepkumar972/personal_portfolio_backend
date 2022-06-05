@@ -113,12 +113,12 @@ const updateResume = async (req, res, next) => {
   const { userData, userSecret } = req.body.secret;
   const existUser = await users.findOne({ email: "sandeepsokle12@gmail.com" });
   const secretData = await secretKey.findOne();
-  // console.log("start update data!!", {
-  //   userData,
-  //   userSecret,
-  //   existUser,
-  //   secretData: secretData.secretKey,
-  // });
+  console.log("start update data!!", {
+    // userData,
+    userSecret,
+    // existUser,
+    secretData: secretData.secretKey,
+  });
 
   delete data.secret;
 

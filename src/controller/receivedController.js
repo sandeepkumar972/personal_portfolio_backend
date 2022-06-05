@@ -1,11 +1,34 @@
 const receivedMessage = require("../Models/receiveMessageModel");
+const secretKey = require("../Models/secretKey");
+const users = require("../Models/userModel");
 
 const getMessage = async (req, res, next) => {
+  const { userData, userSecret } = req.body.data;
+  // console.log(req.query);
+  const existUser = await users.findOne({ email: "sandeepsokle12@gmail.com" });
+  const secretData = await secretKey.findOne();
+  console.log({ userData, secretData });
+
   try {
+    if (
+      userData.name !== existUser.displayName ||
+      userData.uid !== existUser.uid ||
+      userData.email !== existUser.email
+    ) {
+      if (secretData.secretKey !== userSecret) {
+        console.log("secret Key not match!!");
+        throw { message: "Unauthorized User!!" };
+      } else {
+        console.log("secretKey match!!");
+      }
+    } else {
+      console.log("name match!!");
+    }
     const message = await receivedMessage.find();
     if (!message) {
-      throw "Resume not found!!";
+      throw "message not found!!";
     }
+    console.log(message);
     res.status(200).send(message);
   } catch (err) {
     res.status(400).send(err);
