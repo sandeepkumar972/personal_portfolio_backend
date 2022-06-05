@@ -5,21 +5,22 @@ const receiveMessageSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: false,
+      // required: false,
+      required: true,
     },
     email: {
       type: String,
-      default: 0,
+      // default: 0,
       required: true,
     },
     subject: {
       type: String,
-      default: 0,
+      // default: 0,
       required: true,
     },
     description: {
       type: String,
-      default: 0,
+      // default: 0,
       required: true,
     },
   },

@@ -13,8 +13,11 @@ const getMessage = async (req, res, next) => {
 };
 
 const sendMessage = async (req, res, next) => {
+  const data = req.body.data;
   try {
-    const message = await receivedMessage.create(req.body);
+    console.log(data);
+    const message = await receivedMessage.create(data);
+    console.log("message !!", message);
     if (!message) {
       throw "Resume not found!!";
     }
