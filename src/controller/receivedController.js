@@ -24,7 +24,7 @@ const getMessage = async (req, res, next) => {
     } else {
       console.log("name match!!");
     }
-    const message = await receivedMessage.find();
+    const message = await receivedMessage.find().sort({ createdAt: -1 });
     if (!message) {
       throw "message not found!!";
     }
