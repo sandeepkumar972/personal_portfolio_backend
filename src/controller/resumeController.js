@@ -172,10 +172,49 @@ const getBlogs = async (req, res, next) => {
   }
 };
 
+const checkCreds = async (req, res, next) => {
+  const { userData, userSecret } = req.body.secret;
+  const existUser = await users.findOne({ email: "sandeepsokle12@gmail.com" });
+  const secretData = await secretKey.findOne();
+
+  console.log({
+    u1: userData.name,
+    id: userData.uid,
+    email: userData.email,
+  });
+  console.log({
+    u1: existUser.name,
+    id: existUser.uid,
+    email: existUser.email,
+    existUser,
+  });
+  try {
+    if (
+      userData.displayName !== existUser.name ||
+      userData.uid !== existUser.uid ||
+      userData.email !== existUser.email
+    ) {
+      if (secretData.secretKey !== userSecret) {
+        console.log("secret Key not match!!");
+        throw { message: "Unauthorized User!!" };
+      } else {
+        console.log("secretKey match!!");
+      }
+    } else {
+      console.log("name match!!");
+    }
+    res.status(200).send({ status: true });
+  } catch (err) {
+    console.log("Resume Not Updated", err.message);
+    res.status(400).send(err);
+  }
+};
+
 module.exports = {
   getResume,
   saveResume,
   deleteResume,
   updateResume,
   getBlogs,
+  checkCreds,
 };
