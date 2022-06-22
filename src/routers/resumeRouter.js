@@ -8,5 +8,6 @@ resumeRouter.put("/delete/:id", resumeController.deleteResume);
 resumeRouter.put("/update/:id", resumeController.updateResume);
 resumeRouter.get("/getBlogs", resumeController.getBlogs);
 resumeRouter.post("/checkCreds", resumeController.checkCreds);
+resumeRouter.put("/updateProjectStatus/:id", resumeController.updateProjectStatus);
 
 module.exports = resumeRouter;

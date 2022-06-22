@@ -4,7 +4,9 @@ const users = require("../Models/userModel");
 
 const getResume = async (req, res, next) => {
   try {
-    const resume = await dataModel.find().sort({ createdAt: -1 });
+    const resume = await dataModel
+      .find()
+      .sort({ createdAt: -1, updatedAt: -1 });
     if (!resume) {
       throw "Resume not found!!";
     }
@@ -210,6 +212,61 @@ const checkCreds = async (req, res, next) => {
   }
 };
 
+const updateProjectStatus = async (req, res, next) => {
+  const id = req.params.id;
+  let data = req.body;
+  const { userData, userSecret } = req.body.secret;
+  const existUser = await users.findOne({ email: "sandeepsokle12@gmail.com" });
+  const secretData = await secretKey.findOne();
+
+  console.log("start update data!!", {
+    data,
+    val: data.selectedVal,
+    is: data.selectedVal === "Complete",
+  });
+
+  delete data.secret;
+
+  // const finalData = { ...data, secret: undefined };
+
+  try {
+    if (
+      userData.name !== existUser.displayName ||
+      userData.uid !== existUser.uid ||
+      userData.email !== existUser.email
+    ) {
+      if (secretData.secretKey !== userSecret) {
+        console.log("secret Key not match!!");
+        throw { message: "Unauthorized User!!" };
+      } else {
+        console.log("secretKey match!!");
+      }
+    } else {
+      console.log("name match!!");
+    }
+
+    // const resume = await dataModel.findOne({ id });
+
+    const resume = await dataModel.findOneAndUpdate(
+      { id },
+      {
+        type: `${data.selectedVal === "Complete" ? "in progress" : "complete"}`,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      { new: true }
+    );
+    if (!resume) {
+      throw "Resume not found!!";
+    }
+    console.log("Resume Updated", resume);
+    res.status(200).send(resume);
+  } catch (err) {
+    console.log("Resume Not Updated", err.message);
+    res.status(400).send(err);
+  }
+};
+
 module.exports = {
   getResume,
   saveResume,
@@ -217,4 +274,5 @@ module.exports = {
   updateResume,
   getBlogs,
   checkCreds,
+  updateProjectStatus,
 };
