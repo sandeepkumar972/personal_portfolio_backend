@@ -4,7 +4,7 @@ const users = require("../Models/userModel");
 
 const getResume = async (req, res, next) => {
   try {
-    const resume = await dataModel.find();
+    const resume = await dataModel.find().sort({ createdAt: -1 });
     if (!resume) {
       throw "Resume not found!!";
     }
