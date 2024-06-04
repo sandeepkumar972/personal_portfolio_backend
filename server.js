@@ -9,6 +9,8 @@ const secretRouter = require("./src/routers/secretRouters");
 const userRouter = require("./src/routers/userRouter");
 const receviedRouter = require("./src/routers/receivedMessageRouter");
 const app = express();
+const fs = require("fs");
+const https = require("https");
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -17,16 +19,31 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 app.use(cors());
-
-mongoConnection();
-
-const host = process.env.PORT || 8080;
-app.listen(host, () => {
-  console.log(`Server run on local host : ${host}`);
-});
-
 app.use("/profile", profileRouter);
 app.use("/portfolio", resumeRouter);
 app.use("/secretKey", secretRouter);
 app.use("/user", userRouter);
 app.use("/message", receviedRouter);
+
+mongoConnection();
+
+const base = "/etc/letsencrypt/live/insta.webtechbharat.com/";
+const CERT = `${base}/fullchain.pem`;
+const PEM = `${base}/privkey.pem`;
+const CHAIN = `${base}/chain.pem`;
+
+const options = {
+  key: fs.readFileSync(PEM),
+  cert: fs.readFileSync(CERT),
+  ca: fs.readFileSync(CHAIN),
+};
+
+var server = https.createServer(options, app);
+server.listen(443, () => {
+  console.log("Listening securely on", 443);
+});
+
+// const host = process.env.PORT || 8080;
+// app.listen(host, () => {
+//   console.log(`Server run on local host : ${host}`);
+// });
