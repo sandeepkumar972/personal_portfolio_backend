@@ -26,8 +26,7 @@ app.use("/user", userRouter);
 app.use("/message", receviedRouter);
 
 mongoConnection();
-
-const base = "/etc/letsencrypt/live/insta.webtechbharat.com/";
+const base = "/etc/letsencrypt/live/portfolio.webtechbharat.com/";
 const CERT = `${base}/fullchain.pem`;
 const PEM = `${base}/privkey.pem`;
 const CHAIN = `${base}/chain.pem`;
