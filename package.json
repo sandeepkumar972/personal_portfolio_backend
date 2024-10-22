@@ -12,9 +12,10 @@
     "yargs": "^17.4.1"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon ./server.js"
+    "dev": "nodemon ./server.js",
+    "build": "babel ./src -d ./dist"
   },
   "name": "personal_portfolio_backend",
   "version": "1.0.0",
@@ -23,6 +24,10 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "@babel/cli": "^7.25.7",
+    "@babel/core": "^7.25.8",
+    "@babel/preset-env": "^7.25.8",
+    "nodemon": "^2.0.15",
+    "typescript": "^5.6.3"
   }
 }
